@@ -78,18 +78,24 @@
   <audio id="reproductor"></audio>
 
   <script>
-    // Pon aquí tus audios: archivo (dentro de /audios/) y el título que quieres que se vea
+    // Pon aquí tus audios: solo el nombre del archivo dentro de /audios/
     const audios = [
-      { archivo: "audios/audio1.m4a", titulo: "Buenos días 💛" },
-      { archivo: "audios/audio2.m4a", titulo: "Te quiero" }
+      "audios/audio1.m4a",
+      "audios/audio2.m4a"
     ];
 
     function reproducirAleatorio() {
-      const elegido = audios[Math.floor(Math.random() * audios.length)];
+      const archivo = audios[Math.floor(Math.random() * audios.length)];
       const reproductor = document.getElementById("reproductor");
-      reproductor.src = elegido.archivo;
-      reproductor.play();
-      document.getElementById("titulo").textContent = elegido.titulo;
+      reproductor.src = archivo;
+      reproductor.play()
+        .then(() => {
+          document.getElementById("titulo").textContent = archivo;
+        })
+        .catch((error) => {
+          document.getElementById("titulo").textContent = "Error cargando: " + archivo;
+          console.error(error);
+        });
     }
   </script>
 
